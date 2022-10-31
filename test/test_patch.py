@@ -4,7 +4,7 @@ import namespace_testing.import_namespace
 import namespace_testing.from_import
 
 
-def test_method():
+def patch_method():
     return "B"
 
 
