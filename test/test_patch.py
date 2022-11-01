@@ -1,16 +1,19 @@
-from unittest.mock import Mock
+from unittest.mock import patch
 import namespace_testing.method_holder
 import namespace_testing.import_namespace
 import namespace_testing.from_import
-from namespace_testing.from_import import run_method
 
+
+def patch_method():
+    return "B"
+
+
+@patch("namespace_testing.method_holder.original_method", patch_method)
 def test_import_namespace():
-    namespace_testing.method_holder.original_method = Mock(return_value='B')
-    assert run_method() == "B"
-
-def test_from_import():
-    namespace_testing.method_holder.original_method = Mock(return_value='B')
     assert namespace_testing.import_namespace.run_method() == "B"
 
-
-
+@patch("namespace_testing.method_holder.original_method", patch_method)
+def test_from_import():
+    # Comment out top level import and uncomment this import for some funky behaviour
+    # import namespace_testing.import_namespace
+    assert namespace_testing.from_import.run_method() == "B"
